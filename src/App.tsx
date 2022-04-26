@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TodoListItem from "./components/TodoListItem";
 
 const initialTodos = [
@@ -13,10 +13,22 @@ const initialTodos = [
 ];
 
 const App = () => {
+  const [todos, setTodos] = useState(initialTodos);
+
+  const toggleTodo = (selectedTodo: Todo) => {
+    const newTodos = todos.map((todo) => {
+      if (selectedTodo === todo) {
+        return { ...todo, complete: !todo.complete };
+      }
+      return todo;
+    });
+    setTodos(newTodos);
+  };
+
   return (
     <div>
-      <TodoListItem todo={initialTodos[0]} />
-      <TodoListItem todo={initialTodos[1]} />
+      <TodoListItem todo={todos[0]} toggleTodo={toggleTodo} />
+      <TodoListItem todo={todos[1]} toggleTodo={toggleTodo} />
     </div>
   );
 };
